@@ -1,0 +1,46 @@
+.page {
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 1370px;
+  /* font-family: var(--font-geist-sans); */
+}
+
+@media (prefers-color-scheme: dark) {
+  .page {
+    --gray-rgb: 255, 255, 255;
+    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
+    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
+    --button-primary-hover: #ccc;
+    --button-secondary-hover: #1a1a1a;
+  }
+}
+
+.main {
+  padding: 90px 79px 90px 100px;
+  display: flex;
+  flex-direction: column;
+  max-width: 1170px;
+  width: 100%;
+}
+
+/* Enable hover only on non-touch devices */
+@media (max-width: 768px) {
+  .page {
+    padding: 32px;
+  }
+}
+
+.pageTitle {
+  margin-bottom: 45px;
+}
+
+.pageTitle span {
+  color: #000000;
+}
