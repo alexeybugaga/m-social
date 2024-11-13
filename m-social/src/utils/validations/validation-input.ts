@@ -8,13 +8,13 @@ export const validationMainSchema = Yup.object({
   city: Yup.string().required("Выберите город"),
   email: Yup.string().email("Введите корректный email"),
   password: Yup.string()
+    .required("Пароль обязателен")
     .matches(/^[A-Za-z\s]+$/, "В пароле должны быть латинские символы")
     .min(6, "Пароль должен содержать минимум 6 символов"),
 
-  confirmpassword: Yup.string().oneOf(
-    [Yup.ref("password")],
-    "Пароли должны совпадать"
-  ),
+  confirmpassword: Yup.string()
+    .oneOf([Yup.ref("password")], "Пароли должны совпадать")
+    .required("Подтверждение пароля обязательно"),
   phone: Yup.string()
     .required("Введите телефон")
     .length(16, "Некорректный формат номера"),

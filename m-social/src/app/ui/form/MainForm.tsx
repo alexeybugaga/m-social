@@ -1,8 +1,9 @@
 import Input from "@/components/input/Input";
 import { validationMainSchema } from "@/utils/validations/validation-input";
-import { useFormik } from "formik";
 import { FC } from "react";
+import { Controller, useForm } from "react-hook-form";
 import styles from "./MainForm.module.scss";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const MainForm: FC = () => {
   const initialValues = {
@@ -10,24 +11,93 @@ const MainForm: FC = () => {
     city: "",
     password: "",
     confirmpassword: "",
+    email: "",
+    phone: "",
   };
-  const formik = useFormik({
-    initialValues: initialValues,
-    onSubmit: () => {},
-    enableReinitialize: true,
-    validationSchema: validationMainSchema,
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationMainSchema),
+    defaultValues: initialValues,
   });
   return (
     <div className={styles.formWrapper}>
       <div>
-        <Input
+        <Controller
+          name="firstName"
+          control={control} // управление формой
+          defaultValue="" // начальное значение
+          // rules={{ required: "This field is required" }} // валидаторы
+          render={({ field }) => (
+            <Input
+              {...field} // передаем все пропсы от Controller в кастомный инпут
+              label="Имя"
+              placeholder="Введите Имя"
+              error={errors.firstName?.message}
+              required
+            />
+          )}
+        />
+        <div>
+          <Controller
+            name="email"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Input
+                {...field}
+                label="Электронная почта"
+                placeholder="Введите email"
+                error={errors.email?.message}
+                required
+              />
+            )}
+          />
+        </div>
+
+        <div>
+          <Controller
+            name="password"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Input
+                {...field}
+                label="Пароль"
+                placeholder="Введите пароль"
+                error={errors.password?.message}
+                required
+              />
+            )}
+          />
+        </div>
+
+        <div>
+          <Controller
+            name="confirmpassword"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Input
+                {...field}
+                label="Подтверждение пароля"
+                placeholder="Подтвердите пароль"
+                error={errors.confirmpassword?.message}
+                required
+              />
+            )}
+          />
+        </div>
+        {/* <Input
           label={"Имя"}
-          name={"firstName"}
           placeholder={"Введите Имя"}
-          value={formik.values.firstName}
-          onChange={formik.handleChange}
+          {...register("firstName")}
           required
         />
+        {errors.firstName && <p>{errors.firstName.message}</p>} */}
       </div>
     </div>
   );
