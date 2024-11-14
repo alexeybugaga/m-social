@@ -19,8 +19,11 @@ const Input: FC<IInput> = ({
   return (
     <div className={classNames([styles.inputWrap, className || ""])}>
       <label htmlFor={name} className={styles.label}>
-        <span className={styles.labelText}>{label}</span>
-        <div>
+        <span className={styles.labelText}>
+          {label}
+          {required && <span className={styles.labelTextRequired}>*</span>}
+        </span>
+        <div className={styles.inputContainer}>
           <input
             id={name}
             name={name}
