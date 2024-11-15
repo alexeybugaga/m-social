@@ -1,0 +1,32 @@
+@import "../../styles/variables";
+
+.dropdownWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+} 
+
+.custom-select-wrapper {
+  max-width: 335px;
+  flex-grow: 1;
+}
+
+.dropdownLabel {
+  font-size: 21px;
+  line-height: 19px;
+}
+
+.labelTextRequired {
+  color: $color-accent;
+}
+
+.dropdownArrow {
+  svg {
+    color: $color-secondary;
+  }
+}
+
+.custom-select__indicator-separator {
+  display: none;
+}

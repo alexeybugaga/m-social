@@ -1,12 +1,21 @@
-interface IOption {
+import { GroupBase, SingleValue } from "react-select";
+
+export interface IOption {
   label: string;
-  value: any;
+  value: string;
+}
+
+export interface IOptionGroup extends GroupBase<IOption> {
+  label: string;
+  options: IOption[];
 }
 
 export interface IDropDown {
-  options: any[];
-  currentValue?: any;
+  options: IOptionGroup[];
+  currentValue?: IOption;
   placeholder?: string;
-  onChange: (selectedValue: any) => void;
+  onChange: (selectedValue: SingleValue<IOption>) => void;
   className?: string;
+  label?: string;
+  required: boolean;
 }

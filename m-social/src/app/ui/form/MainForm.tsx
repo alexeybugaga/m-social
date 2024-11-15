@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import styles from "./MainForm.module.scss";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Divider from "@/components/divider/Divider";
+import DropDown from "@/components/dropdown/DropDown";
 
 const MainForm: FC = () => {
   const initialValues = {
@@ -44,7 +45,14 @@ const MainForm: FC = () => {
           )}
         />
       </div>
-
+      <div>
+        <DropDown
+          label={"Ваш город"}
+          required
+          options={[]}
+          onChange={() => {}}
+        />
+      </div>
       <Divider marginBottom="0px" marginTop="0px" />
       <div>
         <Controller
