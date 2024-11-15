@@ -31,7 +31,7 @@ const Input: FC<IInput> = ({
             onChange={onChange}
             value={value}
             placeholder={placeholder ? placeholder : "Введите текст..."}
-            className={classNames([styles.input])}
+            className={classNames([styles.input, error && "error"])}
           />
           {error && <span>{error}</span>}
         </div>

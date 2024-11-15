@@ -7,6 +7,7 @@ import styles from "./MainForm.module.scss";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Divider from "@/components/divider/Divider";
 import DropDown from "@/components/dropdown/DropDown";
+import { useCities } from "@/hooks/useCities";
 
 const MainForm: FC = () => {
   const initialValues = {
@@ -26,6 +27,9 @@ const MainForm: FC = () => {
     resolver: yupResolver(validationMainSchema),
     defaultValues: initialValues,
   });
+
+  const { cities, loading, error } = useCities();
+
   return (
     <div className={styles.formWrapper}>
       <div>
@@ -37,10 +41,11 @@ const MainForm: FC = () => {
           render={({ field }) => (
             <Input
               {...field} // передаем все пропсы от Controller в кастомный инпут
-              label="Имя"
+              label={"Имя"}
               placeholder="Введите Имя"
               error={errors.firstName?.message}
               required
+              descr={"Должно содержать не менее 2 символов и только кириллица."}
             />
           )}
         />
@@ -49,10 +54,16 @@ const MainForm: FC = () => {
         <DropDown
           label={"Ваш город"}
           required
-          options={[]}
+          options={cities?.map((city) => {
+            return {
+              value: city.city,
+              label: city.city,
+            };
+          })}
           onChange={() => {}}
         />
       </div>
+      <span></span>
       <Divider marginBottom="0px" marginTop="0px" />
       <div>
         <Controller

@@ -1,28 +1,12 @@
+@import "../styles/variables";
+
 .page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-
   min-height: 100svh;
   display: flex;
   justify-content: center;
   margin: 0 auto;
   max-width: 1370px;
   /* font-family: var(--font-geist-sans); */
-}
-
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
 }
 
 .main {
@@ -33,22 +17,11 @@
   width: 100%;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-}
-
-@media (max-width: 768px) {
-  .page {
-    padding: 32px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-}
-
 .pageTitle {
   margin-bottom: 45px;
-  span {
-    color: #000000;
-  }
+  color: $text-grey;
+}
+
+.pageTitleName {
+  color: $text-primary;
 }

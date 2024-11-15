@@ -1,5 +1,5 @@
 import { FC, useCallback, useRef, useState } from "react";
-import { IDropDown, IOption, IOptionGroup } from "./DropDown.props";
+import { IDropDown, IOption } from "./DropDown.props";
 import classNames from "classnames";
 import Select, { components } from "react-select";
 import styles from "./DropDown.module.scss";
@@ -43,6 +43,7 @@ const DropDown: FC<IDropDown> = ({
   className,
   label,
   required,
+  descr,
 }) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
@@ -90,40 +91,43 @@ const DropDown: FC<IDropDown> = ({
   }, [currentValue, options]);
 
   return (
-    <div className={styles.dropdownWrapper}>
-      {label && (
-        <span className={styles.dropdownLabel}>
-          {label}
-          {required && <span className={styles.labelTextRequired}>*</span>}
-        </span>
-      )}
-      <Select<IOption, false, IOptionGroup>
-        ref={selectRef}
-        id={uniqueId}
-        value={currentValue}
-        placeholder={placeholder ? placeholder : "Выбрать..."}
-        classNamePrefix={"custom-select"}
-        isSearchable={false}
-        noOptionsMessage={() => "Нет доступных опций"}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        onChange={onChange}
-        minMenuHeight={200}
-        maxMenuHeight={200}
-        options={options}
-        components={{
-          DropdownIndicator,
-        }}
-        className={classNames([
-          className ? className : "",
-          "custom-select-wrapper",
-        ])}
-        onMenuOpen={scrollToSelected}
-        onMenuClose={() => closeMenuHandler()}
-        menuShouldScrollIntoView={true}
-        inputValue={inputValue}
-        onInputChange={(value) => setInputValue(value)}
-      />
+    <div className={styles.container}>
+      <div className={styles.dropdownWrapper}>
+        {label && (
+          <span className={styles.dropdownLabel}>
+            {label}
+            {required && <span className={styles.labelTextRequired}>*</span>}
+          </span>
+        )}
+        <Select<IOption, false>
+          ref={selectRef}
+          id={uniqueId}
+          value={currentValue}
+          placeholder={placeholder ? placeholder : "Выбрать..."}
+          classNamePrefix={"custom-select"}
+          isSearchable={false}
+          noOptionsMessage={() => "Нет доступных опций"}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onChange={onChange}
+          minMenuHeight={200}
+          maxMenuHeight={200}
+          options={options}
+          components={{
+            DropdownIndicator,
+          }}
+          className={classNames([
+            className ? className : "",
+            styles.customSelectWrapper,
+          ])}
+          onMenuOpen={scrollToSelected}
+          onMenuClose={() => closeMenuHandler()}
+          menuShouldScrollIntoView={true}
+          inputValue={inputValue}
+          onInputChange={(value) => setInputValue(value)}
+        />
+      </div>
+      {descr && <span className={styles.descr}>{descr}</span>}
     </div>
   );
 };

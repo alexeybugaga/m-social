@@ -5,17 +5,13 @@ export interface IOption {
   value: string;
 }
 
-export interface IOptionGroup extends GroupBase<IOption> {
-  label: string;
-  options: IOption[];
-}
-
 export interface IDropDown {
-  options: IOptionGroup[];
+  options: IOption[];
   currentValue?: IOption;
   placeholder?: string;
   onChange: (selectedValue: SingleValue<IOption>) => void;
   className?: string;
+  descr?: string;
   label?: string;
   required: boolean;
 }
