@@ -1,14 +1,16 @@
 .inputWrap {
   width: 100%;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  align-items: center;
+  grid-template-columns: 2fr 1.4fr;
   gap: 18px;
 }
 
 .label {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   gap: 12px;
 }
 
@@ -17,9 +19,15 @@
   flex-grow: 1;
 }
 
+.inputContainer input::placeholder {
+  color: #7e7e7e;
+}
+
 .labelText {
   font-size: 21px;
+  font-weight: 400;
   line-height: 19px;
+  color: #000;
 }
 
 .labelTextRequired {
@@ -33,7 +41,17 @@
   border: 1px solid #999;
   font-family: Arial;
   font-size: 16px;
+  font-weight: 400;
   line-height: 19px;
+  color: #000;
+}
+
+.input:focus::placeholder {
+  opacity: 0;
+}
+
+.input:focus {
+  box-shadow: 0 0 3px 0 #999;
 }
 
 .input::placeholder {
@@ -42,4 +60,19 @@
 
 .input.error {
   border-color: #ff0000;
+  color: #ff0000;
+}
+
+.descr {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #999;
+}
+
+.errorText {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #ff0000;
 }

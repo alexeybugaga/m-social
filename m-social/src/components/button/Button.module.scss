@@ -1,2 +1,12 @@
+@import "../../styles/mixins.scss";
+@import "../../styles/variables";
+
 .button {
+  @include flex($justify: center);
+  padding: 10px 16px;
+  min-height: 40px;
+  min-width: 119px;
+  border-radius: 5px;
+  background-color: $color-primary;
+  color: $white;
 }

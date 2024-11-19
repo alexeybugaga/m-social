@@ -35,6 +35,30 @@ a {
   color: inherit;
   text-decoration: none;
 }
+button {
+  background-color: transparent;
+  border: none;
+  color: inherit;
+}
+
+input:focus {
+  outline: none;
+}
+
+.custom-select__control {
+  min-height: 31px !important;
+  border-radius: 0px !important;
+}
+.custom-select__indicator {
+  transition: transform 0.3s ease !important;
+}
+.custom-select__control--menu-is-open .custom-select__indicator {
+  transform: rotate(180deg);
+}
+
+.custom-select__indicator-separator {
+  display: none;
+}
 
 @media (prefers-color-scheme: dark) {
   html {

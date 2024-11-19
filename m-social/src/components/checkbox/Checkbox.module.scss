@@ -1,0 +1,56 @@
+@import "../../styles/mixins.scss";
+@import "../../styles/variables";
+
+.checkboxWrap {
+  label {
+    @include flex();
+    gap: 12px;
+    cursor: pointer;
+  }
+}
+
+.checkboxAndAgreement {
+  @include flex();
+  gap: 10px;
+}
+
+.checkboxContent {
+  @include flex($justify: center);
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border: 1px solid $checkbox-border;
+  transform: translateY(1px);
+  .checkboxInput {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    &:checked + .customCheckbox {
+      opacity: 1;
+    }
+  }
+}
+.customCheckbox {
+  display: flex;
+  color: $color-secondary;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.labelText {
+  display: flex;
+  max-width: 224px;
+  flex-grow: 1;
+  @include text($fontSize: 21px, $lineHeight: 19px);
+}
+
+.labelTextRequired {
+  color: $color-accent;
+}
+
+.agreementText {
+  @include text();
+}

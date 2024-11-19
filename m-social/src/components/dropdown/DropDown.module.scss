@@ -1,27 +1,25 @@
 @import "../../styles/variables";
+@import "../../styles/mixins.scss";
 
 .container {
   width: 100%;
   display: grid;
   align-items: center;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2fr 1.4fr;
   gap: 18px;
 }
 .dropdownWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex($justify: space-between);
   gap: 12px;
 }
 
 .customSelectWrapper {
   max-width: 335px;
   flex-grow: 1;
-  .custom-select__control {
-    min-height: 31px;
-  }
 }
-
+.custom-select__control {
+  min-height: 31px;
+}
 .dropdownLabel {
   font-size: 21px;
   line-height: 19px;

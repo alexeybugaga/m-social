@@ -1,6 +1,26 @@
+@import "../../../styles/mixins.scss";
+@import "../../../styles/variables";
+
 .formWrapper {
-  display: flex;
-  flex-direction: column;
+  @include flex($align: initial, $direction: column);
   width: 100%;
   gap: 40px;
+}
+
+.bottomWrapper {
+  @include flex();
+  gap: 12px;
+  .empty {
+    max-width: 224px;
+    flex-grow: 1;
+  }
+}
+
+.buttonAndTextWrapper {
+  @include flex();
+  gap: 12px;
+}
+
+.bottomText {
+  @include text($fontSize: 12px, $lineHeight: 20px, $color: $text-light-grey);
 }

@@ -1,6 +1,36 @@
 .formWrapper {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: initial;
   width: 100%;
   gap: 40px;
+}
+
+.bottomWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+}
+
+.bottomWrapper .empty {
+  max-width: 224px;
+  flex-grow: 1;
+}
+
+.buttonAndTextWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+}
+
+.bottomText {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #999;
 }

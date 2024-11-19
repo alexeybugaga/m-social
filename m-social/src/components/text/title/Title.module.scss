@@ -1,5 +1,5 @@
+@import "../../../styles/mixins.scss";
+
 .title {
-  font-size: 30px;
-  font-weight: 700;
-  line-height: 34.5px;
+  @include text($fontSize: 30px, $fontWeight: 700, $lineHeight: 34.5px);
 }

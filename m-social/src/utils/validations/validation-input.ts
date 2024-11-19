@@ -15,7 +15,6 @@ export const validationMainSchema = Yup.object({
   confirmpassword: Yup.string()
     .oneOf([Yup.ref("password")], "Пароли должны совпадать")
     .required("Подтверждение пароля обязательно"),
-  phone: Yup.string()
-    .required("Введите телефон")
-    .length(16, "Некорректный формат номера"),
+  phone: Yup.string().nullable().length(18, "Некорректный формат номера"),
+  agreement: Yup.boolean(),
 });

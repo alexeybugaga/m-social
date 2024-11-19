@@ -2,14 +2,15 @@
   width: 100%;
   display: grid;
   align-items: center;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2fr 1.4fr;
   gap: 18px;
 }
 
 .dropdownWrapper {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   gap: 12px;
 }
 
@@ -18,7 +19,7 @@
   flex-grow: 1;
 }
 
-.customSelectWrapper .custom-select__control {
+.custom-select__control {
   min-height: 31px;
 }
 
@@ -32,7 +33,7 @@
 }
 
 .dropdownArrow svg {
-  color: #037BB8;
+  color: #037bb8;
 }
 
 .custom-select__indicator-separator {
