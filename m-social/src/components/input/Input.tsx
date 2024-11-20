@@ -3,6 +3,7 @@ import { IInput } from "./Input.props";
 import styles from "./Input.module.scss";
 import classNames from "classnames";
 import MaskInput from "react-maskinput";
+import { phoneMask } from "@/constants/common.const";
 
 const Input: FC<IInput> = ({
   label,
@@ -17,7 +18,8 @@ const Input: FC<IInput> = ({
   descr,
   required,
 }) => {
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [showMask, setShowMask] = useState<boolean>(false);
   useEffect(() => {
     if (autofocus && name) {
       const inpunTel = document.getElementById(name) as HTMLInputElement;
@@ -29,10 +31,12 @@ const Input: FC<IInput> = ({
   useEffect(() => {
     if (isFocused && name && type === "tel") {
       const inpunTel = document.getElementById(name) as HTMLInputElement;
-
       setTimeout(() => {
         if (inpunTel) {
-          inpunTel?.setSelectionRange(3, 3);
+          const firstEmptyIndex = value.indexOf("_");
+          if (firstEmptyIndex !== -1) {
+            inpunTel.setSelectionRange(firstEmptyIndex, firstEmptyIndex);
+          }
         }
       }, 0);
     }
@@ -41,17 +45,28 @@ const Input: FC<IInput> = ({
   const handleChange = (e: React.SyntheticEvent) => {
     const target = e.currentTarget as HTMLInputElement;
     if (onChange) {
+      let rawValue = target.value;
+      if (type === "tel" && rawValue.trim() === phoneMask) {
+        rawValue = "";
+      }
+
       onChange({
         ...e,
-        target,
+        target: { ...target, value: rawValue },
       } as React.ChangeEvent<HTMLInputElement>);
     }
   };
   const onBlur = () => {
+    const rawValue = value.replace(/\D/g, "");
+    console.log("rawValue", rawValue.length);
+    if (rawValue.length === 0) {
+      setShowMask(false);
+    }
     setIsFocused(false);
   };
 
   const onFocus = () => {
+    setShowMask(true);
     setIsFocused(true);
   };
   const getMask = (): string | null => {
@@ -60,6 +75,7 @@ const Input: FC<IInput> = ({
     }
     return null;
   };
+  console.log("value", value);
   return (
     <div className={classNames([styles.inputWrap, className || ""])}>
       <label htmlFor={name} className={styles.label}>
@@ -70,11 +86,10 @@ const Input: FC<IInput> = ({
         <div className={styles.inputContainer}>
           {type === "tel" ? (
             <MaskInput
-              // alwaysShowMask
               mask={getMask() || ""}
-              showMask
-              maskChar="*"
-              value={value}
+              showMask={showMask}
+              maskChar="_"
+              value={showMask ? value : ""}
               onChange={handleChange}
               onFocus={onFocus}
               onBlur={onBlur}

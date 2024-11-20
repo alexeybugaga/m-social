@@ -10,3 +10,12 @@
   background-color: #71c838;
   color: #fff;
 }
+
+.button:hover {
+  box-shadow: 0 0 3px 0 #71c838;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

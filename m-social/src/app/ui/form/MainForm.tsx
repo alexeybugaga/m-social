@@ -1,8 +1,8 @@
 "use client";
 import Input from "@/components/input/Input";
 import { validationMainSchema } from "@/utils/validations/validation-input";
-import { FC } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { FC, useEffect, useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import styles from "./MainForm.module.scss";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Divider from "@/components/divider/Divider";
@@ -11,11 +11,21 @@ import { useCities } from "@/hooks/useCities";
 import Checkbox from "@/components/checkbox/Checkbox";
 import { IFormValues } from "@/types/FormTypes";
 import Button from "@/components/button/Button";
+import {
+  transformCitiesList,
+  updateNameInLocalStorage,
+} from "@/utils/helperFunctions";
+import dayjs from "dayjs";
+import "dayjs/locale/ru";
 
 const MainForm: FC = () => {
+  // const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [submitDate, setSubmitDate] = useState<string | null>(null);
+  const { cities, loading, error } = useCities();
+  const transformCities = transformCitiesList(cities);
   const initialValues = {
     firstName: "",
-    city: "",
+    city: transformCities[0]?.value,
     password: "",
     confirmpassword: "",
     email: "",
@@ -26,34 +36,62 @@ const MainForm: FC = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting, defaultValues },
     watch,
     setValue,
+    reset,
   } = useForm<IFormValues>({
     resolver: yupResolver(validationMainSchema),
     defaultValues: initialValues,
+    reValidateMode: "onChange",
   });
+  console.log("transformCities", transformCities);
+
+  useEffect(() => {
+    if (transformCities.length > 0) {
+      console.log("allValues", allValues);
+      // setValue("city", transformCities[0]?.value || "");
+    }
+  }, [transformCities]);
   const allValues = watch();
-  console.log(allValues);
-  const { cities, loading, error } = useCities();
-  const onSubmit = (data: IFormValues) => {
+
+  const onSubmit: SubmitHandler<IFormValues> = async (data) => {
+    if (isSubmitting) return;
+
+    try {
+      const response = await fetch("/api/formSubmit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Response from server:", data);
+        updateNameInLocalStorage(data.data.firstName);
+        setSubmitDate(dayjs().toLocaleString());
+        reset(initialValues);
+      } else {
+        console.error("Error sending data");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
     console.log("Значение формы:", data);
   };
+
   return (
-    <form
-      action={"/"}
-      onSubmit={handleSubmit(onSubmit)}
-      className={styles.formWrapper}
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.formWrapper}>
       <div>
         <Controller
           name="firstName"
-          control={control} // управление формой
-          defaultValue="" // начальное значение
-          // rules={{ required: "This field is required" }} // валидаторы
+          control={control}
+          defaultValue=""
           render={({ field }) => (
             <Input
-              {...field} // передаем все пропсы от Controller в кастомный инпут
+              {...field}
               label={"Имя"}
               placeholder="Введите Имя"
               error={errors.firstName?.message}
@@ -67,30 +105,13 @@ const MainForm: FC = () => {
         <DropDown
           label={"Ваш город"}
           required
-          options={cities?.map((city) => {
-            return {
-              value: city.city,
-              label: city.city,
-            };
-          })}
+          options={transformCities}
           onChange={(option) => {
             setValue("city", option?.value || "");
           }}
           currentValue={
-            cities
-              ?.map((city) => {
-                return {
-                  value: city.city,
-                  label: city.city,
-                };
-              })
-              .find((city) => city.value === watch("city")) ||
-            cities?.map((city) => {
-              return {
-                value: city.city,
-                label: city.city,
-              };
-            })[0]
+            transformCities.find((city) => city.value === watch("city")) ||
+            transformCities[0]
           }
         />
       </div>
@@ -145,7 +166,7 @@ const MainForm: FC = () => {
               {...field}
               type="tel"
               label="Номер телефона"
-              placeholder="+7 (***) ***-**-**"
+              placeholder="+7 (999) 999-99-99"
               error={errors.phone?.message}
               descr={"Маска с международным форматом “+ 7 (999) 999-99-99”."}
               required={false}
@@ -190,10 +211,20 @@ const MainForm: FC = () => {
         <div className={styles.bottomWrapper}>
           <span className={styles.empty}></span>
           <div className={styles.buttonAndTextWrapper}>
-            <Button>Изменить</Button>
-            <span className={styles.bottomText}>
-              последние изменения 15 мая 2024 в 14:55
-            </span>
+            <Button
+              // type={"submit"}
+              disabled={isSubmitting}
+              onClick={handleSubmit(onSubmit)}
+              // onClick={handleSubmit(onSubmit)}
+            >
+              Изменить
+            </Button>
+            {submitDate && (
+              <span className={styles.bottomText}>
+                последние изменения{" "}
+                {dayjs(submitDate).locale("ru").format("DD MMMM YYYY в HH:mm")}
+              </span>
+            )}
           </div>
         </div>
       </div>

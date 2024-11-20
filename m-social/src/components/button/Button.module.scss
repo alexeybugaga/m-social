@@ -9,4 +9,11 @@
   border-radius: 5px;
   background-color: $color-primary;
   color: $white;
+  &:hover {
+    box-shadow: 0 0 3px 0 $color-primary;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 }

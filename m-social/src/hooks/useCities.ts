@@ -1,9 +1,5 @@
+import { City } from "@/types/CommonTypes";
 import { useState, useEffect } from "react";
-
-interface City {
-  city: string;
-  population: string;
-}
 
 export const useCities = () => {
   const [cities, setCities] = useState<City[]>([]);
