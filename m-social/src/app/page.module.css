@@ -15,9 +15,27 @@
   width: 100%;
 }
 
+@media (max-width: 1200px) {
+  .main {
+    padding: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 40px 20px;
+  }
+}
+
 .pageTitle {
-  margin-bottom: 45px;
+  margin-bottom: 44px;
   color: #666;
+}
+
+@media (max-width: 768px) {
+  .pageTitle {
+    margin-bottom: 24px;
+  }
 }
 
 .pageTitleName {

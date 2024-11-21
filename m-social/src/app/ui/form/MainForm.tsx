@@ -1,7 +1,7 @@
 "use client";
 import Input from "@/components/input/Input";
 import { validationMainSchema } from "@/utils/validations/validation-input";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import styles from "./MainForm.module.scss";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,10 +19,9 @@ import dayjs from "dayjs";
 import "dayjs/locale/ru";
 
 const MainForm: FC = () => {
-  // const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submitDate, setSubmitDate] = useState<string | null>(null);
   const { cities, loading, error } = useCities();
-  const transformCities = transformCitiesList(cities);
+  const transformCities = useMemo(() => transformCitiesList(cities), [cities]);
   const initialValues = {
     firstName: "",
     city: transformCities[0]?.value,
@@ -39,22 +38,23 @@ const MainForm: FC = () => {
     formState: { errors, isSubmitting, defaultValues },
     watch,
     setValue,
+    getValues,
     reset,
   } = useForm<IFormValues>({
     resolver: yupResolver(validationMainSchema),
     defaultValues: initialValues,
     reValidateMode: "onChange",
   });
-  console.log("transformCities", transformCities);
 
   useEffect(() => {
-    if (transformCities.length > 0) {
-      console.log("allValues", allValues);
-      // setValue("city", transformCities[0]?.value || "");
+    if (
+      transformCities.length > 0 &&
+      getValues("city") !== transformCities[0].value
+    ) {
+      setValue("city", transformCities[0].value || "");
     }
-  }, [transformCities]);
+  }, [transformCities, setValue, getValues]);
   const allValues = watch();
-
   const onSubmit: SubmitHandler<IFormValues> = async (data) => {
     if (isSubmitting) return;
 
@@ -69,7 +69,6 @@ const MainForm: FC = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Response from server:", data);
         updateNameInLocalStorage(data.data.firstName);
         setSubmitDate(dayjs().toLocaleString());
         reset(initialValues);
@@ -79,7 +78,6 @@ const MainForm: FC = () => {
     } catch (error) {
       console.error("An error occurred:", error);
     }
-    console.log("Значение формы:", data);
   };
 
   return (
@@ -116,7 +114,7 @@ const MainForm: FC = () => {
         />
       </div>
       <Divider marginBottom="0px" marginTop="0px" />
-      <div>
+      <div style={{ marginTop: 1 }}>
         <Controller
           name="password"
           control={control}
@@ -186,7 +184,9 @@ const MainForm: FC = () => {
               placeholder="Введите email"
               error={errors.email?.message}
               descr={"Проверка на валидность email."}
-              required={false}
+              required={
+                allValues.agreement !== undefined ? allValues.agreement : false
+              }
             />
           )}
         />

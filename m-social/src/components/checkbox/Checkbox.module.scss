@@ -6,12 +6,19 @@
     @include flex();
     gap: 12px;
     cursor: pointer;
+    @media (max-width: 610px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 }
 
 .checkboxAndAgreement {
   @include flex();
   gap: 10px;
+  @media (max-width: 768px) {
+    gap: 6px;
+  }
 }
 
 .checkboxContent {
@@ -42,9 +49,12 @@
 
 .labelText {
   display: flex;
-  max-width: 224px;
+  max-width: 212px;
   flex-grow: 1;
   @include text($fontSize: 21px, $lineHeight: 19px);
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
 }
 
 .labelTextRequired {
@@ -53,4 +63,7 @@
 
 .agreementText {
   @include text();
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 }

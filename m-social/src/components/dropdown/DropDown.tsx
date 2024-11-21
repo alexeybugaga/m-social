@@ -48,28 +48,9 @@ const DropDown: FC<IDropDown> = ({
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
 
-  const [uniqueId, setUniqueId] = useState(
-    () => "select_" + Math.random().toFixed(5).slice(2)
-  );
   const selectRef = useRef<any | null>(null);
   const menuListRef = useRef<HTMLDivElement | null>(null);
 
-  const closeMenuHandler = () => {
-    const menuEl = document.querySelector<HTMLElement>(
-      `#${uniqueId} .custom-select__menu`
-    );
-
-    const containerEl = menuEl?.parentElement;
-    const clonedMenuEl = menuEl?.cloneNode(true) as HTMLElement;
-    if (!clonedMenuEl) return;
-
-    clonedMenuEl.classList.add("menu--close");
-    clonedMenuEl.addEventListener("animationend", () => {
-      containerEl?.removeChild(clonedMenuEl);
-    });
-
-    containerEl?.appendChild(clonedMenuEl!);
-  };
   const scrollToSelected = useCallback(() => {
     setTimeout(() => {
       if (selectRef.current && menuListRef.current) {
@@ -101,7 +82,6 @@ const DropDown: FC<IDropDown> = ({
         )}
         <Select<IOption, false>
           ref={selectRef}
-          id={uniqueId}
           value={currentValue}
           placeholder={placeholder ? placeholder : "Выбрать..."}
           classNamePrefix={"custom-select"}
@@ -121,7 +101,6 @@ const DropDown: FC<IDropDown> = ({
             styles.customSelectWrapper,
           ])}
           onMenuOpen={scrollToSelected}
-          onMenuClose={() => closeMenuHandler()}
           menuShouldScrollIntoView={true}
           inputValue={inputValue}
           onInputChange={(value) => setInputValue(value)}

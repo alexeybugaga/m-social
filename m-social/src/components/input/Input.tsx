@@ -58,7 +58,6 @@ const Input: FC<IInput> = ({
   };
   const onBlur = () => {
     const rawValue = value.replace(/\D/g, "");
-    console.log("rawValue", rawValue.length);
     if (rawValue.length === 0) {
       setShowMask(false);
     }
@@ -75,7 +74,6 @@ const Input: FC<IInput> = ({
     }
     return null;
   };
-  console.log("value", value);
   return (
     <div className={classNames([styles.inputWrap, className || ""])}>
       <label htmlFor={name} className={styles.label}>

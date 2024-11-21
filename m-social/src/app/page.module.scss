@@ -15,11 +15,20 @@
   flex-direction: column;
   max-width: 1170px;
   width: 100%;
+  @media (max-width: 1200px) {
+    padding: 40px;
+  }
+  @media (max-width: 768px) {
+    padding: 40px 20px;
+  }
 }
 
 .pageTitle {
-  margin-bottom: 45px;
+  margin-bottom: 44px;
   color: $text-grey;
+  @media (max-width: 768px) {
+    margin-bottom: 24px;
+  }
 }
 
 .pageTitleName {

@@ -9,13 +9,12 @@ export const validationMainSchema = Yup.object({
   email: Yup.string()
     .email("Введите корректный email")
     .when("agreement", (agreement: boolean[], schema) => {
-      console.log("agreement", agreement);
       return agreement[0]
         ? schema.required("Введите email")
         : schema.notRequired();
     }),
   password: Yup.string()
-    .required("Пароль обязателен")
+    .required("Укажите пароль")
     .matches(/^[A-Za-z\s]+$/, "В пароле должны быть латинские символы")
     .min(6, "Пароль должен содержать минимум 6 символов"),
 
@@ -23,17 +22,16 @@ export const validationMainSchema = Yup.object({
     .oneOf([Yup.ref("password")], "Пароли должны совпадать")
     .required("Подтверждение пароля обязательно"),
   phone: Yup.string()
-    .nullable() // Разрешает null
-    .notRequired() // Дает возможность пропускать поле
+    .nullable()
+    .notRequired()
     .transform((value) => {
-      if (!value) return ""; // Возвращаем пустую строку, если значение отсутствует
-      console.log("value", value.replace(/[\s_()\-]/g, ""));
-      return value.replace(/[\s_()\-]/g, ""); // Убираем пробелы, скобки, дефисы и "_"
+      if (!value) return "";
+      return value.replace(/[\s_()\-]/g, "");
     })
     .test(
       "is-valid-phone",
       "Номер должен содержать 11 цифр",
-      (value) => !value || value.length === 12 // Проверка только если поле заполнено
+      (value) => !value || value.length === 12
     ),
   agreement: Yup.boolean(),
 });

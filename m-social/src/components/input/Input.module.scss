@@ -5,25 +5,50 @@
   width: 100%;
   display: grid;
   align-items: center;
-  grid-template-columns: 2fr 1.4fr;
+  grid-template-columns: 1.9fr 1.4fr;
   gap: 18px;
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 }
 
 .label {
   @include flex($justify: space-between);
   gap: 12px;
+  @media (max-width: 1200px) {
+    justify-content: flex-start;
+  }
+  @media (max-width: 610px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }
 
 .inputContainer {
+  position: relative;
   max-width: 335px;
   flex-grow: 1;
   input::placeholder {
     color: $text-placeholder;
   }
+  @media (max-width: 610px) {
+    max-width: none;
+    width: 100%;
+  }
 }
 
 .labelText {
+  display: flex;
+  padding-bottom: 2px;
+  min-width: 212px;
+  max-width: 250px;
+
   @include text($fontSize: 21px, $lineHeight: 19px);
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
 }
 
 .labelTextRequired {
@@ -57,5 +82,8 @@
 }
 
 .errorText {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
   @include text($fontSize: 12px, $lineHeight: 16px, $color: $color-accent);
 }
