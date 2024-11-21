@@ -1,0 +1,19 @@
+@import "../../styles/mixins.scss";
+@import "../../styles/variables";
+
+.button {
+  @include flex($justify: center);
+  @include text($fontSize: 18px, $lineHeight: 20px, $color: $white);
+  padding: 10px 16px;
+  min-height: 40px;
+  min-width: 119px;
+  border-radius: 5px;
+  background-color: $color-primary;
+  &:hover {
+    box-shadow: 0 0 3px 0 $color-primary;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}

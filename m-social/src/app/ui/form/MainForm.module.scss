@@ -1,0 +1,37 @@
+@import "../../../styles/mixins.scss";
+@import "../../../styles/variables";
+
+.formWrapper {
+  @include flex($align: initial, $direction: column);
+  width: 100%;
+  gap: 39.5px;
+  @media (max-width: 768px) {
+    gap: 24px;
+  }
+}
+
+.bottomWrapper {
+  @include flex();
+  margin-top: 12px;
+  gap: 12px;
+  .empty {
+    max-width: 212px;
+    flex-grow: 1;
+    @media (max-width: 768px) {
+      max-width: none;
+      flex-grow: 0;
+    }
+  }
+  @media (max-width: 768px) {
+    gap: 0;
+  }
+}
+
+.buttonAndTextWrapper {
+  @include flex();
+  gap: 12px;
+}
+
+.bottomText {
+  @include text($fontSize: 12px, $lineHeight: 20px, $color: $text-light-grey);
+}

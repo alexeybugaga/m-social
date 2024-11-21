@@ -1,0 +1,36 @@
+@import "../styles/variables";
+
+.page {
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 1370px;
+  /* font-family: var(--font-geist-sans); */
+}
+
+.main {
+  padding: 90px 79px 90px 100px;
+  display: flex;
+  flex-direction: column;
+  max-width: 1170px;
+  width: 100%;
+  @media (max-width: 1200px) {
+    padding: 40px;
+  }
+  @media (max-width: 768px) {
+    padding: 40px 20px;
+  }
+}
+
+.pageTitle {
+  margin-bottom: 44px;
+  color: $text-grey;
+  @media (max-width: 768px) {
+    margin-bottom: 24px;
+  }
+}
+
+.pageTitleName {
+  color: $text-primary;
+}
